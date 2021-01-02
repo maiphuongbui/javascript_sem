@@ -149,7 +149,6 @@ body {
 }
 
 
-
 .popup {
     margin: 70px auto;
     padding: 20px;
@@ -218,11 +217,17 @@ body {
     font-size: 100%;
     border: 1px solid rgba(255, 255, 255, 0.43);
     margin: 5px;
+    cursor: pointer;
 }
 
-#playerForm label{
+.list li.selected {
+    background-color: #fff;
+    color: #000;
+}
+
+#playerForm label {
     color: #fff;
-    
+
 }
 
 #playerForm > div {
