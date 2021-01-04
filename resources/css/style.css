@@ -93,6 +93,7 @@ body {
     flex-wrap: wrap;
     justify-content: center;
     max-width: 1000px;
+    padding: 20px 0;
 }
 
 #gameBoard > div {
@@ -101,7 +102,7 @@ body {
     max-width: 200px;
     max-height: 200px;
     background-color: #67313f;
-    margin: 15px 10px;
+    margin: 5px;
     border: 1px solid #000;
     text-align: center;
 }

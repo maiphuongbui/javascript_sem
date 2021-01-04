@@ -88,9 +88,9 @@ function memoryTurnCard(card,val) {
      }
      else if (isOneCardTurned()) {
          setCardAsTurned(card,val);
+         p1MoveCounter();
          if (areCardsMatching()) {
              matchCards();
-             p1MoveCounter();
              p1ScoreCounter();
              if (isGameOver()) {
                  gameOver();
@@ -172,14 +172,14 @@ card_val_id = [];
 
 function p1MoveCounter() {
     p1_moves++;
-    $('.moves').innerHTML = p1_moves;
+    $('.moves').html(p1_moves);
 }
 
 // počítání skóre hráče
 
 function p1ScoreCounter() {
 p1_score += 10;
-$('.score').innerHTML = p1_score;
+$('.score').html(p1_score);
 }
 
 // kontrola, zda už je konec hry
