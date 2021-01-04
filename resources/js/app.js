@@ -16,7 +16,6 @@ let p1_score = 0;
 $(document).ready(function () {
   sessionStorage.clear();
   // showPeople();
-
   /* POČET HRÁČŮ*/
   //zobrazení příslušný počet textových polí na jméno při kliknutí
   $('.list-item').click(function () {
@@ -60,7 +59,7 @@ function newGame() {
   const shuffledCards = shuffle(cards);
 
   for (let i = 0; i < cards.length; i++) {
-    output += '<div class="card"' + i + '" onclick="memoryTurnCard(this,\'' + cards[i] + '\')"></div>';
+    output += '<div id="card' + i + '" onclick="memoryTurnCard(this,\'' + cards[i] + '\')"></div>';
   }
   document.getElementById('gameBoard').innerHTML = output;
 };
