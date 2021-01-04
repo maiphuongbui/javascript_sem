@@ -188,6 +188,18 @@ body {
     opacity: 100 !important;
 }*/
 
+.size-list li {
+    display: block;
+    padding: 10px 20px;
+    color: #fff;
+    list-style: none;
+    border: 1px solid rgba(255, 255, 255, 0.43);
+    margin: 5px;
+    font-size: 120%;
+    cursor: pointer;
+
+}
+
 
 .list li {
     display: inline-block;

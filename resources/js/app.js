@@ -1,7 +1,7 @@
 /*** DEFINICE PROMĚNNÝCH ***/
 
 /*seznam karet*/
-const cards = ['ion-social-octocat', 'ion-social-snapchat', 'ion-android-plane', 'ion-android-star', 'ion-android-favorite', 'ion-android-bar', 'ion-android-car', 'ion-ios-paw', 'ion-ios-nutrition', 'ion-ios-rose', 'ion-ios-flower', 'ion-ios-lightbulb', 'ion-ios-tennisball', 'ion-ios-football', 'ion-ios-game-controller-b', 'ion-ios-americanfootball', 'ion-ios-bolt', 'ion-ios-cart', 'ion-ios-home', 'ion-umbrella', 'ion-planet', 'ion-university', 'ion-ribbon-b', 'ion-music-note', 'ion-bug', 'ion-beer', 'ion-pizza', 'ion-icecream', 'ion-coffee', 'ion-flag', 'ion-help-buoy', 'ion-camera', 'ion-social-octocat', 'ion-social-snapchat', 'ion-android-plane', 'ion-android-star', 'ion-android-favorite', 'ion-android-bar', 'ion-android-car', 'ion-ios-paw', 'ion-ios-nutrition', 'ion-ios-rose', 'ion-ios-flower', 'ion-ios-lightbulb', 'ion-ios-tennisball', 'ion-ios-football', 'ion-ios-game-controller-b', 'ion-ios-americanfootball', 'ion-ios-bolt', 'ion-ios-cart', 'ion-ios-home', 'ion-umbrella', 'ion-planet', 'ion-university', 'ion-ribbon-b', 'ion-music-note', 'ion-bug', 'ion-beer', 'ion-pizza', 'ion-icecream', 'ion-coffee', 'ion-flag', 'ion-help-buoy', 'ion-camera'];
+let cards = [];
 let card_values = [];  //sem se bude ukládat hodnota karty
 let card_val_id = []; //sem se ukládají id otočených karet
 let cards_flipped = 0; //počet otočených karet, aby se vědělo, kdy hra skončí
@@ -39,10 +39,43 @@ $(document).ready(function () {
 
     console.log('players: ' + players);
   });
+  showBoardSize();
+
+  /*výběr velikosti karetní sady*/
+
+$('#16cards').click(function() {
+    cards = [];
+    $.getJSON("small.json", function(result){
+        cards.push(result);
+    })
+    
+    console.log(cards);
+    
 });
 
+ $('#36cards').click(function() {
+    cards = [];
+    $.getJSON("medium.json", function(result){
+        cards.push(result);
+    })
+    
+    console.log(cards);
+    
+});
 
-/*výběr velikosti karetní sady*/
+ $('#64cards').click(function() {
+    cards = [];
+    $.getJSON("large.json", function(result){
+        JSON.stringify(result);
+        cards.push(result);
+    })
+    
+    console.log(cards);
+}); 
+
+
+});
+
 
 
 /*** NOVÁ HRA ***/
