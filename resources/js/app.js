@@ -8,20 +8,41 @@ let cards_flipped = 0; //počet otočených karet, aby se vědělo, kdy hra skon
 
 // počet odehraných kroků hráče
 let p1_moves = 0;
+let p2_moves = 0;
+let p3_moves = 0;
+let p4_moves = 0;
+
+let moves = [];
+moves.push(p1_moves);
+moves.push(p2_moves);
+moves.push(p3_moves);
+moves.push(p4_moves);
+
 
 //výše skóre hráče
 let p1_score = 0;
+let p2_score = 0;
+let p3_score = 0;
+let p4_score = 0;
+
+let score = [];
+score.push(p1_score);
+score.push(p2_score);
+score.push(p3_score);
+score.push(p4_score);
+
 
 
 $(document).ready(function () {
     sessionStorage.clear();
-    // showPeople();
+    let players;
+
     /* POČET HRÁČŮ*/
     //zobrazení příslušný počet textových polí na jméno při kliknutí
     $('.list-item').click(function () {
         $(this).parent().children().removeClass('selected');
         $(this).addClass('selected');
-        const players = parseInt($(this).text());
+        let players = parseInt($(this).text());
         let formNumber = '';
 
         sessionStorage.playersCnt = JSON.stringify(players);
@@ -35,9 +56,19 @@ $(document).ready(function () {
 
     $('#playerForm #play').click(function (e) {
         e.preventDefault();
-        //const players = parseInt(JSON.parse(sessionStorage.playersCnt));
+        const players = parseInt(JSON.parse(sessionStorage.playersCnt));
 
-        // console.log('players: ' + players);
+        console.log('players: ' + players);
+
+
+    // nahrání zapsaných jmen do jednotlivých player-containers
+
+        let nameOutput = '';
+        for (let i=0; i < players; i++) {
+            nameOutput += '<div id="p' + i +'"><h2>Name:' + $('#player-'+i).html + '</h2><p>Move(s):' + moves[i] + '</p><p>Score:' + score[i] +' </p></div>';
+        }
+        $('#playerContainer>div').html(nameOutput);
+
         hidePeople();
     });
     showBoardSize();
@@ -51,6 +82,7 @@ $(document).ready(function () {
         $.getJSON('small.json', function (data) {
             JSON.stringify(data);
             cards = data;
+            $('#gameBoard').children().css({"width":"200px","height":"200px"});
             console.log(cards);
         });
 
@@ -66,6 +98,7 @@ $(document).ready(function () {
         $.getJSON('medium.json', function (data) {
             JSON.stringify(data);
             cards = data;
+            $('#gameBoard').children().css({"width":"150px","height":"150px"});
             console.log(cards);
         });
 
@@ -80,6 +113,7 @@ $(document).ready(function () {
         $.getJSON('large.json', function (data) {
             JSON.stringify(data);
             cards = data;
+            $('#gameBoard').children().css({"width":"100px","height":"100px"});
             console.log(cards);
         });
 
