@@ -144,7 +144,7 @@ body {
 }
 
 .small {
-    width: 40%;
+    width: 30%;
 }
 
 .popup h2 {
@@ -188,7 +188,7 @@ body {
     opacity: 100 !important;
 }*/
 
-.size-list li {
+.size li {
     display: block;
     padding: 10px 20px;
     color: #fff;

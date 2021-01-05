@@ -1,7 +1,7 @@
 /*** DEFINICE PROMĚNNÝCH ***/
 
 /*seznam karet*/
-let cards = [];
+let cards = ["ion-social-octocat", "ion-android-bar", "ion-ios-paw", "ion-ios-nutrition", "ion-ios-rose", "ion-ios-game-controller-b", "ion-umbrella", "ion-planet", "ion-social-octocat", "ion-android-bar", "ion-ios-paw", "ion-ios-nutrition", "ion-ios-rose", "ion-ios-game-controller-b", "ion-umbrella", "ion-planet"];
 let card_values = [];  //sem se bude ukládat hodnota karty
 let card_val_id = []; //sem se ukládají id otočených karet
 let cards_flipped = 0; //počet otočených karet, aby se vědělo, kdy hra skončí
@@ -35,15 +35,18 @@ $(document).ready(function () {
 
     $('#playerForm #play').click(function (e) {
         e.preventDefault();
-        const players = parseInt(JSON.parse(sessionStorage.playersCnt));
+        //const players = parseInt(JSON.parse(sessionStorage.playersCnt));
 
-        console.log('players: ' + players);
+        // console.log('players: ' + players);
+        hidePeople();
     });
     showBoardSize();
 
     /*výběr velikosti karetní sady*/
 
     $('#16cards').click(function (data) {
+        $(this).parent().children().removeClass('selected');
+        $(this).addClass('selected');
         cards = [];
         $.getJSON('small.json', function (data) {
             JSON.stringify(data);
@@ -57,6 +60,8 @@ $(document).ready(function () {
 
 
     $('#36cards').click(function (data) {
+        $(this).parent().children().removeClass('selected');
+        $(this).addClass('selected');
         cards = [];
         $.getJSON('medium.json', function (data) {
             JSON.stringify(data);
@@ -69,6 +74,8 @@ $(document).ready(function () {
     });
 
     $('#64cards').click(function (data) {
+        $(this).parent().children().removeClass('selected');
+        $(this).addClass('selected');
         cards = [];
         $.getJSON('large.json', function (data) {
             JSON.stringify(data);
@@ -79,10 +86,14 @@ $(document).ready(function () {
 
     });
 
+    $('#next').click(function (e) {
+        e.preventDefault();
+        hideBoardSize();
+        showPeople();
 
 
+    });
 });
-
 
 
 /*** NOVÁ HRA ***/
