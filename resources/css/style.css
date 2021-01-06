@@ -180,6 +180,22 @@ body {
 
 }
 
+#close2 {
+    color: #fff;
+    cursor: pointer;
+}
+
+.popup #close2 {
+    position: absolute;
+    top: 20px;
+    right: 30px;
+    transition: all 200ms;
+    font-size: 30px;
+    font-weight: 700;
+    text-decoration: none;
+
+}
+
 .hidden {
     display: none;
 }
@@ -217,6 +233,16 @@ body {
     background-color: #fff;
     color: #000;
 }
+#scoreboard {
+    list-style: none;
+    color: #fff;
+}
+
+#scoreboard li {
+    color: #fff;
+    margin: 0 auto;
+}
+
 
 #playerForm label {
     color: #fff;

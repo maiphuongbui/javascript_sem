@@ -37,10 +37,10 @@ const close_icon = document.getElementById('close');
 $(document).ready(function () {
 
     sessionStorage.clear();
-    let players;
+
 
     showBoardSize();
-    
+
 
     /*výběr velikosti karetní sady*/
 
@@ -51,7 +51,7 @@ $(document).ready(function () {
         $.getJSON('small.json', function (data) {
             JSON.stringify(data);
             cards = data;
-            console.log(cards);
+
         });
 
     })
@@ -65,7 +65,7 @@ $(document).ready(function () {
         $.getJSON('medium.json', function (data) {
             JSON.stringify(data);
             cards = data;
-            console.log(cards);
+
         });
 
 
@@ -78,7 +78,7 @@ $(document).ready(function () {
         $.getJSON('large.json', function (data) {
             JSON.stringify(data);
             cards = data;
-            console.log(cards);
+
         });
 
     });
@@ -92,7 +92,7 @@ $(document).ready(function () {
     });
 
 
-     /* POČET HRÁČŮ*/
+    /* POČET HRÁČŮ*/
     //zobrazení příslušný počet textových polí na jméno při kliknutí
     $('.list-item').click(function () {
         $(this).parent().children().removeClass('selected');
@@ -103,7 +103,7 @@ $(document).ready(function () {
         sessionStorage.playersCnt = JSON.stringify(players);
 
         for (let i = 0; i < players; i++) {
-            formNumber += '<div class="form-container"><label for="playerName">Player Name:</label> <input class="form-detail" type="text" id="player-' + i + '"></div>';
+            formNumber += '<div class="form-container"><label for="playerName">Player Name:</label> <input class="form-detail" type="text" id="player' + i + '"></div>';
         }
 
         $('#playerForm>div').html(formNumber);
@@ -116,17 +116,23 @@ $(document).ready(function () {
         console.log('players: ' + players);
 
 
-    // nahrání zapsaných jmen do jednotlivých player-containers
+        // nahrání zapsaných jmen do jednotlivých player-containers
+
 
         let nameOutput = '';
-        for (let i=0; i < players; i++) {
-            nameOutput += '<div id="p' + i +'"><h2>Name:' + $('#player-'+i).html + '</h2><p>Move(s):' + moves[i] + '</p><p>Score:' + score[i] +' </p></div>';
+        for (let i = 0; i < players; i++) {
+            nameOutput += '<div id="p' + i + '"><h2>Name:' + document.getElementById('player' + i) + '</h2><p>Move(s):' + '</p><p>Score:' + ' </p></div>';
         }
-        $('#playerContainer>div').html(nameOutput);
+        $('#player-container>div').html(nameOutput);
+
+        console.log($('#player-container>div').html(nameOutput));
+
+
+
 
         hidePeople();
         newGame();
-        
+
     });
 });
 
@@ -143,7 +149,7 @@ function newGame() {
     p1_score = 0;
     let output = '';
     // pokud hráč nevybere žádnou velikost pole, automaticky se spustí 4x4 varianta
-    if(cards.length === 0) {
+    if (cards.length === 0) {
         cards = cards_default;
     }
     document.getElementById('gameBoard').innerHTML = "";
@@ -156,6 +162,12 @@ function newGame() {
     document.getElementById('gameBoard').innerHTML = output;
     cardSize();
     restartGame();
+    $('.highscore-board').click(function (e) {
+        e.preventDefault();
+        showScoreBoard();
+        closerScoreBoard();
+    });
+
 };
 
 
@@ -288,11 +300,12 @@ function gameOver() {
     showEndGame();
     document.getElementById('gameBoard').innerHTML = "";
     closeModal();
+    closerScoreBoard();
     playAgain();
 }
 
 function closeModal() {
-   $('#close').click(function(){
+    $('#close').click(function () {
         hideEndGame();
         showBoardSize();
     });
@@ -300,17 +313,17 @@ function closeModal() {
 
 function playAgain() {
     $('#play-again').click(function (e) {
-    e.preventDefault();
-    hideEndGame();
-    showBoardSize();
-    
+        e.preventDefault();
+        hideEndGame();
+        showBoardSize();
 
 
-});
+
+    });
 }
 
 function restartGame() {
-    $('#restart').click(function() {
+    $('#restart').click(function () {
         document.getElementById('gameBoard').innerHTML = "";
         showBoardSize();
     })
@@ -342,15 +355,29 @@ function showEndGame() {
 function hideEndGame() {
     $('#popup1').addClass('hidden');
 };
+function showScoreBoard(){
+    $('#popup4').removeClass('hidden');
+ 
+}
+
+function hideScoreBoard() {
+    $('#popup4').addClass('hidden');
+}
+
+function closerScoreBoard() {
+    $('#close2').click(function(){
+        hideScoreBoard();
+    });
+}
 
 function cardSize() {
-    if(cards.length === 16) {
-        $('#gameBoard').children().css({"width":"200px","height":"200px"});
+    if (cards.length === 16) {
+        $('#gameBoard').children().css({ "width": "200px", "height": "200px" });
     }
-    else if(cards.length === 36) {
-        $('#gameBoard').children().css({"width":"150px","height":"150px"});
+    else if (cards.length === 36) {
+        $('#gameBoard').children().css({ "width": "150px", "height": "150px" });
     }
     else {
-        $('#gameBoard').children().css({"width":"100px","height":"100px"});
+        $('#gameBoard').children().css({ "width": "100px", "height": "100px" });
     }
 };
