@@ -1,7 +1,8 @@
 /*** DEFINICE PROMĚNNÝCH ***/
 
 /*seznam karet*/
-let cards = ["ion-social-octocat", "ion-android-bar", "ion-ios-paw", "ion-ios-nutrition", "ion-ios-rose", "ion-ios-game-controller-b", "ion-umbrella", "ion-planet", "ion-social-octocat", "ion-android-bar", "ion-ios-paw", "ion-ios-nutrition", "ion-ios-rose", "ion-ios-game-controller-b", "ion-umbrella", "ion-planet"];
+let cards = [];
+let cards_default = ["ion-social-octocat", "ion-android-bar", "ion-ios-paw", "ion-ios-nutrition", "ion-ios-rose", "ion-ios-game-controller-b", "ion-umbrella", "ion-planet", "ion-social-octocat", "ion-android-bar", "ion-ios-paw", "ion-ios-nutrition", "ion-ios-rose", "ion-ios-game-controller-b", "ion-umbrella", "ion-planet"];
 let card_values = [];  //sem se bude ukládat hodnota karty
 let card_val_id = []; //sem se ukládají id otočených karet
 let cards_flipped = 0; //počet otočených karet, aby se vědělo, kdy hra skončí
@@ -31,13 +32,69 @@ score.push(p2_score);
 score.push(p3_score);
 score.push(p4_score);
 
-
+const close_icon = document.getElementById('close');
 
 $(document).ready(function () {
+
     sessionStorage.clear();
     let players;
 
-    /* POČET HRÁČŮ*/
+    showBoardSize();
+
+    /*výběr velikosti karetní sady*/
+
+    $('#16cards').click(function (data) {
+        $(this).parent().children().removeClass('selected');
+        $(this).addClass('selected');
+        cards = [];
+        $.getJSON('small.json', function (data) {
+            JSON.stringify(data);
+            cards = data;
+            $('#gameBoard').children().css({"width":"200px","height":"200px"});
+            console.log(cards);
+        });
+
+    })
+
+
+
+    $('#36cards').click(function (data) {
+        $(this).parent().children().removeClass('selected');
+        $(this).addClass('selected');
+        cards = [];
+        $.getJSON('medium.json', function (data) {
+            JSON.stringify(data);
+            cards = data;
+            $('#gameBoard').children().css({"width":"150px","height":"150px"});
+            console.log(cards);
+        });
+
+
+    });
+
+    $('#64cards').click(function (data) {
+        $(this).parent().children().removeClass('selected');
+        $(this).addClass('selected');
+        cards = [];
+        $.getJSON('large.json', function (data) {
+            JSON.stringify(data);
+            cards = data;
+            $('#gameBoard').children().css({"width":"100px","height":"100px"});
+            console.log(cards);
+        });
+
+    });
+
+    $('#next').click(function (e) {
+        e.preventDefault();
+        hideBoardSize();
+        showPeople();
+
+
+    });
+
+
+     /* POČET HRÁČŮ*/
     //zobrazení příslušný počet textových polí na jméno při kliknutí
     $('.list-item').click(function () {
         $(this).parent().children().removeClass('selected');
@@ -70,62 +127,8 @@ $(document).ready(function () {
         $('#playerContainer>div').html(nameOutput);
 
         hidePeople();
-    });
-    showBoardSize();
-
-    /*výběr velikosti karetní sady*/
-
-    $('#16cards').click(function (data) {
-        $(this).parent().children().removeClass('selected');
-        $(this).addClass('selected');
-        cards = [];
-        $.getJSON('small.json', function (data) {
-            JSON.stringify(data);
-            cards = data;
-            $('#gameBoard').children().css({"width":"200px","height":"200px"});
-            console.log(cards);
-        });
-
-
-    })
-
-
-
-    $('#36cards').click(function (data) {
-        $(this).parent().children().removeClass('selected');
-        $(this).addClass('selected');
-        cards = [];
-        $.getJSON('medium.json', function (data) {
-            JSON.stringify(data);
-            cards = data;
-            $('#gameBoard').children().css({"width":"150px","height":"150px"});
-            console.log(cards);
-        });
-
-
-
-    });
-
-    $('#64cards').click(function (data) {
-        $(this).parent().children().removeClass('selected');
-        $(this).addClass('selected');
-        cards = [];
-        $.getJSON('large.json', function (data) {
-            JSON.stringify(data);
-            cards = data;
-            $('#gameBoard').children().css({"width":"100px","height":"100px"});
-            console.log(cards);
-        });
-
-
-    });
-
-    $('#next').click(function (e) {
-        e.preventDefault();
-        hideBoardSize();
-        showPeople();
-
-
+       
+        newGame();
     });
 });
 
@@ -140,6 +143,10 @@ function newGame() {
     p1_moves = 0;
     p1_score = 0;
     let output = '';
+    // pokud hráč nevybere žádnou velikost pole, automaticky se spustí 4x4 varianta
+    if(cards.length === 0) {
+        cards = cards_default;
+    }
     document.getElementById('gameBoard').innerHTML = "";
     const shuffledCards = shuffle(cards);
 
@@ -278,11 +285,14 @@ function isGameOver() {
 function gameOver() {
     showEndGame();
     document.getElementById('gameBoard').innerHTML = "";
-    newGame();
 }
 
-
-
+function closeModal() {
+   $('#close').click(function(){
+        hideEndGame();
+        newGame();
+    });
+}
 /* POP-UP WINDOWS*/
 
 function showPeople() {

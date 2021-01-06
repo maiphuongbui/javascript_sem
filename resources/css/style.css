@@ -151,8 +151,9 @@ body {
     margin-bottom: 10px;
 }
 
-.close {
+#close {
     color: #fff;
+    cursor: pointer;
 }
 
 .content-1 {
@@ -166,7 +167,7 @@ body {
 
 }
 
-.popup .close {
+.popup #close {
     position: absolute;
     top: 20px;
     right: 30px;
