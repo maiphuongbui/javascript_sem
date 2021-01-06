@@ -40,6 +40,7 @@ $(document).ready(function () {
     let players;
 
     showBoardSize();
+    
 
     /*výběr velikosti karetní sady*/
 
@@ -50,7 +51,6 @@ $(document).ready(function () {
         $.getJSON('small.json', function (data) {
             JSON.stringify(data);
             cards = data;
-            $('#gameBoard').children().css({"width":"200px","height":"200px"});
             console.log(cards);
         });
 
@@ -65,7 +65,6 @@ $(document).ready(function () {
         $.getJSON('medium.json', function (data) {
             JSON.stringify(data);
             cards = data;
-            $('#gameBoard').children().css({"width":"150px","height":"150px"});
             console.log(cards);
         });
 
@@ -79,7 +78,6 @@ $(document).ready(function () {
         $.getJSON('large.json', function (data) {
             JSON.stringify(data);
             cards = data;
-            $('#gameBoard').children().css({"width":"100px","height":"100px"});
             console.log(cards);
         });
 
@@ -127,8 +125,8 @@ $(document).ready(function () {
         $('#playerContainer>div').html(nameOutput);
 
         hidePeople();
-       
         newGame();
+        
     });
 });
 
@@ -139,6 +137,7 @@ $(document).ready(function () {
 
 
 function newGame() {
+
     cards_flipped = 0;
     p1_moves = 0;
     p1_score = 0;
@@ -153,7 +152,10 @@ function newGame() {
     for (let i = 0; i < cards.length; i++) {
         output += '<div id="card' + i + '" onclick="memoryTurnCard(this,\'' + cards[i] + '\')"></div>';
     }
+
     document.getElementById('gameBoard').innerHTML = output;
+    cardSize();
+    restartGame();
 };
 
 
@@ -285,18 +287,39 @@ function isGameOver() {
 function gameOver() {
     showEndGame();
     document.getElementById('gameBoard').innerHTML = "";
+    closeModal();
+    playAgain();
 }
 
 function closeModal() {
    $('#close').click(function(){
         hideEndGame();
-        newGame();
+        showBoardSize();
     });
+}
+
+function playAgain() {
+    $('#play-again').click(function (e) {
+    e.preventDefault();
+    hideEndGame();
+    showBoardSize();
+    
+
+
+});
+}
+
+function restartGame() {
+    $('#restart').click(function() {
+        document.getElementById('gameBoard').innerHTML = "";
+        showBoardSize();
+    })
 }
 /* POP-UP WINDOWS*/
 
 function showPeople() {
     $('#popup2').removeClass('hidden');
+    $('.list').children().removeClass('selected');
 };
 
 function hidePeople() {
@@ -305,6 +328,7 @@ function hidePeople() {
 
 function showBoardSize() {
     $('#popup3').removeClass('hidden');
+    $('.list').children().removeClass('selected');
 };
 
 function hideBoardSize() {
@@ -317,4 +341,16 @@ function showEndGame() {
 
 function hideEndGame() {
     $('#popup1').addClass('hidden');
+};
+
+function cardSize() {
+    if(cards.length === 16) {
+        $('#gameBoard').children().css({"width":"200px","height":"200px"});
+    }
+    else if(cards.length === 36) {
+        $('#gameBoard').children().css({"width":"150px","height":"150px"});
+    }
+    else {
+        $('#gameBoard').children().css({"width":"100px","height":"100px"});
+    }
 };
