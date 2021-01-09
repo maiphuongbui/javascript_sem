@@ -388,6 +388,7 @@ function hidePeople() {
 function showBoardSize() {
     $('#popup3').removeClass('hidden');
     $('.list').children().removeClass('selected');
+    $('#16cards').addClass('selected');
 };
 
 function hideBoardSize() {
