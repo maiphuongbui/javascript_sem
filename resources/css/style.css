@@ -200,10 +200,6 @@ body {
     display: none;
 }
 
-/*.show {
-    visibility: visible !important;
-    opacity: 100 !important;
-}*/
 
 .size li {
     display: block;
@@ -254,3 +250,12 @@ body {
     color: #fff;
 }
 
+.onTurn h2{
+    font-weight: 700;
+    font-size: 130%;
+    text-shadow: 2px 3px 8px #701e40;
+}
+
+#player-container > div {
+    margin-top: 15px;
+}
