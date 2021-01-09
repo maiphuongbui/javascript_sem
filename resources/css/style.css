@@ -259,3 +259,15 @@ body {
 #player-container > div {
     margin-top: 15px;
 }
+
+#playerName {
+    color: #fff;
+}
+
+#finalMove {
+    color: #fff;
+}
+
+#finalScore {
+    color: #fff;
+}

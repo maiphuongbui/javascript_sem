@@ -83,8 +83,11 @@ $(document).ready(function () {
         let formNumber = '';
 
         for (let i = 0; i < player_count; i++) {
-            formNumber += '<div class="form-container"><label for="playerName">Player Name:</label> <input class="form-detail" type="text" id="player' + i + '"></div>';
+            
+            formNumber += '<div class="form-container"><label for="playerName">Player Name:</label> <input class="form-detail" type="text" id="player' + i + '"/></div>';
+           
         }
+        
 
         $('#playerForm>div').html(formNumber);
     });
@@ -96,6 +99,12 @@ $(document).ready(function () {
         let nameOutput = '';
         for (let i = 0; i < player_count; i++) {
             nameOutput += '<div id="p' + i + '"><h2>Name: <span class="name' + i + '">' + document.getElementById('player' + i).value + '</span></h2><p>Moves: <span class="moves' + i + '">0</span></p><p>Score: <span class="score' + i + '">0</span></p></div>';
+            
+            if (document.getElementById('player'+i).value == "") {
+                alert ("Name must be filled out");
+                return false;
+            }
+        
         }
 
         $('#player-container').html(nameOutput);
@@ -274,47 +283,64 @@ function isGameOver() {
     return cards_flipped == cards.length;
 }
 
-
 // je konec hry
 function gameOver() {
 
     // pole bude obsahovat informace o name, score, moves jednotlvých hráčů
-    const gameResults = [];
+    let gameResults = [];
+    let scoreBoard = [];
 
 
     // pro každého hráče, co se účastnil hry potřebuju získat jeho jméno, skóre a počet tahů
     for (let i = 0; i < player_count; i++) {
-        const playerResult = [];
-        playerResult.name = $('.name' + i).html();
+        let playerResult = [];
+        let highScoreResult = [];
+        playerResult.playerName = $('.name' + i).html();
         playerResult.score = parseInt($('.score' + i).html());
         playerResult.moves = parseInt($('.moves' + i).html());
         gameResults.push(playerResult); // vložím pole do pole
 
-        // playerResults  array
-        // playerResults.score
+        highScoreResult.playerName = $('.name' + i).html();
+        highScoreResult.score = parseInt($('.score' + i).html());
+        scoreBoard.push(highScoreResult);
+
     }
 
-    // gameResults[0].score 
+    // doplnění příslušného name/moves/score výherce do congrats popupu
+    let winner = sortedHighscore(gameResults);
+    let winnerName = winner[0].playerName;
+    let winnerMoves = winner[0].moves;
+    let winnerScore = winner[0].score;
 
-
-    console.log(gameResults);
-    console.log(getSortedGameResultsByScore(gameResults));
+    $('#playerName').html(winnerName);
+    $('#finalScore').html(winnerScore);
+    $('#finalMove').html(winnerMoves);
 
     showEndGame();
+
+
+    console.log(scoreBoard);
+
+    let savedScores = localStorage.getItem('highscore') || '[]';
+    let highscores = [JSON.parse(savedScores), scoreBoard]
+        .sort((a, b) => b.score - a.score)
+        .slice(0, 5)
+    localStorage.setItem('highscore', JSON.stringify(highscores))
+
+
     document.getElementById('gameBoard').innerHTML = "";
-    cards= [];
+    cards = [];
     closeModal();
     closerScoreBoard();
     playAgain();
 }
 
-
-function getSortedGameResultsByScore(gameResults) {
+function sortedHighscore(gameResults) {
 
     // vytvořím si kopii, kterou budu seřazovat
-    const sortedGameResults = Array.from(gameResults);
+    let sortedGameResults = Array.from(gameResults);
 
-    sortedGameResults.sort(function(a, b) {
+    sortedGameResults.sort(function (a, b) {
         if (a.score === b.score) {
             // pokud je skóre stejný u dvou hráčů, vyhrává ten, kdo má menší počet kroků
             return a.moves - b.moves;
@@ -323,8 +349,11 @@ function getSortedGameResultsByScore(gameResults) {
     });
 
     return sortedGameResults;
-}
 
+
+
+
+}
 
 
 
@@ -366,7 +395,9 @@ function hideBoardSize() {
 };
 
 function showEndGame() {
+
     $('#popup1').removeClass('hidden');
+
 };
 
 function hideEndGame() {
