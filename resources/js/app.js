@@ -109,8 +109,15 @@ $(document).ready(function () {
 
         $('#player-container').html(nameOutput);
 
+
+      if ($('.list-item').hasClass('selected')) {
         hidePeople();
         newGame();
+      }
+      else {
+          alert("You have to choose number of players!")
+      }
+  
 
     });
 
