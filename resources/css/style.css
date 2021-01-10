@@ -108,7 +108,7 @@ body {
 }
 
 .icons i {
-    font-size: 250%;
+    font-size: 300%;
     text-align: center;
     display: flex;
     justify-content: center;
@@ -116,6 +116,8 @@ body {
     flex-direction: column;
     padding: 20px 0;
 }
+
+
 
 
 /***** POP-UP WINDOWS *****/

@@ -83,11 +83,11 @@ $(document).ready(function () {
         let formNumber = '';
 
         for (let i = 0; i < player_count; i++) {
-            
+
             formNumber += '<div class="form-container"><label for="playerName">Player Name:</label> <input class="form-detail" type="text" id="player' + i + '"/></div>';
-           
+
         }
-        
+
 
         $('#playerForm>div').html(formNumber);
     });
@@ -99,12 +99,12 @@ $(document).ready(function () {
         let nameOutput = '';
         for (let i = 0; i < player_count; i++) {
             nameOutput += '<div id="p' + i + '"><h2>Name: <span class="name' + i + '">' + document.getElementById('player' + i).value + '</span></h2><p>Moves: <span class="moves' + i + '">0</span></p><p>Score: <span class="score' + i + '">0</span></p></div>';
-            
-            if (document.getElementById('player'+i).value == "") {
-                alert ("Name must be filled out");
+
+            if (document.getElementById('player' + i).value == "") {
+                alert("Name must be filled out");
                 return false;
             }
-        
+
         }
 
         $('#player-container').html(nameOutput);
@@ -120,6 +120,7 @@ $(document).ready(function () {
         $('#playerForm>div').html("");
         $('#player-container').html("");
         showBoardSize();
+        cards = [];
     });
 
     //funkce na tlačíko highscore board
@@ -294,7 +295,7 @@ function gameOver() {
     // pro každého hráče, co se účastnil hry potřebuju získat jeho jméno, skóre a počet tahů
     for (let i = 0; i < player_count; i++) {
         let playerResult = [];
-        let highScoreResult = [];
+        let highScoreResult = {};
         playerResult.playerName = $('.name' + i).html();
         playerResult.score = parseInt($('.score' + i).html());
         playerResult.moves = parseInt($('.moves' + i).html());
@@ -303,6 +304,7 @@ function gameOver() {
         highScoreResult.playerName = $('.name' + i).html();
         highScoreResult.score = parseInt($('.score' + i).html());
         scoreBoard.push(highScoreResult);
+
 
     }
 
@@ -321,13 +323,23 @@ function gameOver() {
 
     console.log(scoreBoard);
 
+    
+    
     let savedScores = localStorage.getItem('highscore') || '[]';
-    let highscores = [JSON.parse(savedScores), scoreBoard]
-        .sort((a, b) => b.score - a.score)
-        .slice(0, 5)
-    localStorage.setItem('highscore', JSON.stringify(highscores))
+    let stringScore = JSON.stringify(scoreBoard);
 
 
+  let highscores = [JSON.parse(savedScores), stringScore]
+        highscores.sort((a, b) => b.score - a.score);
+        highscores.slice(0, 5);
+    localStorage.setItem('highscore', JSON.stringify(highscores));
+
+    let retrievedScores = JSON.parse(window.localStorage.getItem('highscore'));
+
+for (let j=0; j < 5; j++) {
+    $('#scoreboard').html('<tr><td>'+ retrievedScores[j].playerName + '</td><td>' + retrievedScores[j].score + '</td></tr>');
+}
+ 
     document.getElementById('gameBoard').innerHTML = "";
     cards = [];
     closeModal();
@@ -371,6 +383,7 @@ function playAgain() {
         $('#playerForm>div').html("");
         $('#player-container').html("");
         showBoardSize();
+        cards = [];
     });
 }
 
@@ -421,7 +434,7 @@ function closerScoreBoard() {
 }
 
 function cardSize() {
-    if (cards.length === 16) {
+    if (cards.length <= 16) {
         $('#gameBoard').children().css({ "width": "200px", "height": "200px" });
     } else if (cards.length === 36) {
         $('#gameBoard').children().css({ "width": "150px", "height": "150px" });
