@@ -134,7 +134,7 @@ body {
 .popup {
     margin: 70px auto;
     padding: 20px;
-    background: #933a52;
+    background: #b84966;
     text-align: center;
     border-radius: 5px;
     width: 80%;
@@ -234,11 +234,13 @@ body {
 #scoreboard {
     list-style: none;
     color: #fff;
+    margin: 0 auto;
 }
 
-#scoreboard li {
+#scoreboard td {
     color: #fff;
-    margin: 0 auto;
+    padding: 5px 15px;
+    
 }
 
 
