@@ -239,9 +239,11 @@ body {
 
 #scoreboard td {
     color: #fff;
-    padding: 5px 15px;
+    padding: 10px 30px;
+    border: 1px solid  rgba(255, 255, 255, 0.43);
     
 }
+
 
 
 #playerForm label {
