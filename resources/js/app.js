@@ -164,6 +164,9 @@ function newGame() {
     document.getElementById('gameBoard').innerHTML = output;
     cardSize();
 
+    retrievedScores = JSON.parse(localStorage.getItem('highscore'));
+    getHighScoreBoard();
+
 };
 
 
@@ -375,9 +378,13 @@ function gameOver() {
 let retrievedScores;
 
 function getHighScoreBoard() {
-    for (var j = 0; j < retrievedScores.length; j++) {      
-        $('#scoreboard').html('<tr><td>' + retrievedScores[j].playerName + '</td><td>' + retrievedScores[j].score + '</td></tr>');
+    let scoreList = ''; 
+    for (var j = 0; j < retrievedScores.length; j++) {     
+        
+       scoreList += '<tr><td>' + retrievedScores[j].playerName + '</td><td>' + retrievedScores[j].score + '</td></tr>';
 }
+
+$('#scoreboard').html(scoreList);
 
 }
 
